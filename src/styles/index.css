@@ -1,0 +1,83 @@
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/figtree';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+:root[data-theme='dark'] {
+  --bg: 15 18 38;
+  --panel: 24 29 56;
+  --raised: 33 39 74;
+  --line: 54 63 108;
+  --ink: 236 239 250;
+  --muted: 160 170 204;
+  --brand: 155 140 255;
+  --good: 94 214 150;
+  --bad: 255 120 120;
+  --warn: 255 200 90;
+  --c-lectura: 255 180 84;
+  --c-logica: 155 140 255;
+  --c-matematicas: 52 209 191;
+  --c-ciencias: 126 217 87;
+  --c-sociales: 255 122 102;
+  --c-ingles: 90 176 255;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --bg: 243 245 252;
+  --panel: 255 255 255;
+  --raised: 233 237 248;
+  --line: 207 214 235;
+  --ink: 20 26 51;
+  --muted: 82 94 130;
+  --brand: 98 80 220;
+  --good: 16 130 80;
+  --bad: 190 40 50;
+  --warn: 150 95 0;
+  --c-lectura: 168 98 0;
+  --c-logica: 98 80 220;
+  --c-matematicas: 5 120 110;
+  --c-ciencias: 60 130 20;
+  --c-sociales: 200 60 40;
+  --c-ingles: 20 100 190;
+  color-scheme: light;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  @apply bg-bg font-sans text-ink antialiased;
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(var(--brand) / 0.14), transparent 60%),
+    radial-gradient(40rem 24rem at -10% 20%, rgb(var(--c-matematicas) / 0.07), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.01em; }
+:focus-visible { outline: 3px solid rgb(var(--brand)); outline-offset: 2px; border-radius: 6px; }
+
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-panel shadow-lift; }
+  .card-pad { @apply card p-5 sm:p-6; }
+  .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-brand text-bg hover:brightness-110; }
+  .btn-ghost { @apply btn border border-line bg-raised/60 text-ink hover:bg-raised; }
+  .btn-danger { @apply btn border border-bad/50 bg-bad/10 text-bad hover:bg-bad/20; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-raised/60 px-2.5 py-1 text-xs font-semibold text-muted; }
+  .field { @apply min-h-[44px] rounded-xl border border-line bg-raised/60 px-3 py-2 text-sm text-ink placeholder:text-muted; }
+  .kbd-tile { @apply min-h-[44px] rounded-xl border border-line bg-raised/50 px-3 py-2 text-left text-sm transition-colors hover:bg-raised; }
+}
+
+.reading { max-width: 68ch; line-height: 1.75; }
+
+@keyframes pop { 0% { transform: scale(.6); opacity: 0 } 70% { transform: scale(1.1) } 100% { transform: scale(1); opacity: 1 } }
+@keyframes rise { from { transform: translateY(8px); opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes confetti { 0% { transform: translateY(-10px) rotate(0); opacity: 1 } 100% { transform: translateY(160px) rotate(360deg); opacity: 0 } }
+.anim-pop { animation: pop .45s ease-out both; }
+.anim-rise { animation: rise .3s ease-out both; }
+.confetti-bit { position: absolute; top: 0; width: 8px; height: 14px; border-radius: 2px; animation: confetti 1.6s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .confetti-bit { display: none; }
+}
